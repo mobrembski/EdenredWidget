@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">TicketRestaurant Widget</string>
+    <string name="card_string">TicketRestaurant® Card</string>
+    <string name="apply_btn">Continue</string>
+    <string name="exit_btn">Cancel</string>
+    <string name="type_in_card_nr">Type in card number</string>
+    <string name="configure_title">Configure widget</string>
+    <string name="card_input_invalid">Invalid card number entered!</string>
+    <string name="connection_error">Connection error!</string>
+    <string name="notification_title">Edenred card balance</string>
+    <string name="notification_content" formatted="false">Your %d card balance has been increased by %1.2f PLN to %1.2f PLN</string>
+    <string name="show_notify">Show notifications when balance is increased</string>
+
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TicketRestaurant Widget</string>
+    <string name="apply_btn">Kontynuuj</string>
+    <string name="card_string">TicketRestaurant®</string>
+    <string name="exit_btn">Anuluj</string>
+    <string name="type_in_card_nr">Wpisz numer karty</string>
+    <string name="configure_title">Konfiguracja</string>
+    <string name="card_input_invalid">Nieprawidłowy numer karty</string>
+    <string name="connection_error">Błąd połączenia</string>
+    <string name="notification_content" formatted="false">Karta %d została doładowana kwotą %1.2f PLN do %1.2f PLN</string>
+    <string name="notification_title">Karta Edenred</string>
+    <string name="show_notify">Pokaż powiadomienie gdy karta zostanie doładowana</string>
+</resources>
