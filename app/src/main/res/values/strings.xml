@@ -12,5 +12,6 @@
     <string name="notification_title">Edenred card balance</string>
     <string name="notification_content" formatted="false">Your %d card balance has been increased by %1.2f PLN to %1.2f PLN</string>
     <string name="show_notify">Show notifications when balance is increased</string>
+    <string name="tap_to_see">Card balance increased. Drag down to see balance</string>
 
 </resources>

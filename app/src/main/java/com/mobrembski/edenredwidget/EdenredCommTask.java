@@ -115,7 +115,8 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
                     .setAutoCancel(true)
                     .setStyle(new NotificationCompat.BigTextStyle().bigText(
                             String.format(notifContent, cardNum, diff, d)))
-                    .setContentTitle(context.getResources().getString(R.string.notification_title));
+                    .setContentTitle(context.getResources().getString(R.string.notification_title))
+                    .setContentText(context.getResources().getString(R.string.tap_to_see));
 
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

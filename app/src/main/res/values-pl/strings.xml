@@ -11,4 +11,5 @@
     <string name="notification_content" formatted="false">Karta %d została doładowana kwotą %1.2f PLN do %1.2f PLN</string>
     <string name="notification_title">Karta Edenred</string>
     <string name="show_notify">Pokaż powiadomienie gdy karta zostanie doładowana</string>
+    <string name="tap_to_see">Karta doładowana. Przeciągnij w dół aby zobaczyć kwotę</string>
 </resources>
