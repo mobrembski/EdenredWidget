@@ -52,5 +52,14 @@
         android:layout_toEndOf="@id/button1"
         android:textStyle="bold"/>
 
+    <TextView
+        android:id="@+id/updated_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button1"
+        android:layout_toEndOf="@+id/button1"
+        android:textAppearance="@android:style/TextAppearance.Small"/>
+
 
 </RelativeLayout>
