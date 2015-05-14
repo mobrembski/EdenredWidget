@@ -1,6 +1,5 @@
 package com.mobrembski.edenredwidget;
 
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
@@ -78,12 +77,12 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
 
             InputStream inputStream = httpResponse.getEntity().getContent();
             String stringResponse = convertInputStreamToString(inputStream);
-            float d = (float)parseResponse(stringResponse, cardNum);
+            float d = (float) parseResponse(stringResponse, cardNum);
             notificationIfNeeded(cardNum, d);
-            sp.edit().putFloat(widgetId+"_value", d).commit();
+            sp.edit().putFloat(widgetId + "_value", d).commit();
             String valStr = String.valueOf(d);
             if (width > 110)
-                valStr+=" PLN";
+                valStr += " PLN";
             view.setTextViewText(R.id.card_value, valStr);
             view.setTextColor(R.id.card_value, Color.BLACK);
             view.setTextViewText(R.id.card_id, String.valueOf(cardNum));
@@ -104,7 +103,7 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
 
     private void notificationIfNeeded(long cardNum, float d) {
         float lastValue = sp.getFloat(widgetId + "_value", 0.0f);
-        boolean notifyEnabled = sp.getBoolean(widgetId+"_notify", true);
+        boolean notifyEnabled = sp.getBoolean(widgetId + "_notify", true);
         if (!notifyEnabled)
             return;
         float diff = d - lastValue;
@@ -164,11 +163,11 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
         }
     }
 
-    private static String convertInputStreamToString(InputStream inputStream) throws IOException{
-        BufferedReader bufferedReader = new BufferedReader( new InputStreamReader(inputStream));
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String line;
         String result = "";
-        while((line = bufferedReader.readLine()) != null)
+        while ((line = bufferedReader.readLine()) != null)
             result += line;
 
         inputStream.close();
