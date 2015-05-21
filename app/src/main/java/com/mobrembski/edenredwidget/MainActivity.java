@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 public class MainActivity extends AppWidgetProvider {
 
     public static final String ButtonActionIntent = "MY_PACKAGE_NAME.WIDGET_BUTTON";
-    
+
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
