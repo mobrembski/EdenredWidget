@@ -14,10 +14,11 @@ import android.widget.RemoteViews;
 
 public class MainActivity extends AppWidgetProvider {
 
+    public static final String ButtonActionIntent = "MY_PACKAGE_NAME.WIDGET_BUTTON";
+    
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager,
                          int[] appWidgetIds) {
-        Log.d("EdenredWidget", "onUpdate");
         for (int appWidgetId : appWidgetIds)
             updateWidgets(context, appWidgetManager, appWidgetId);
     }
@@ -34,25 +35,24 @@ public class MainActivity extends AppWidgetProvider {
         SharedPreferences sp = context.getSharedPreferences(context.getPackageName(),
                 Context.MODE_PRIVATE);
         int widgetWidth = sp.getInt(appWidgetId + "_width", 80);
-        Log.d("EdenredWidget", "onReceive" + intent.getAction());
-        if (intent.getAction() == "MY_PACKAGE_NAME.WIDGET_BUTTON" ||
-                intent.getAction() == "android.appwidget.action.APPWIDGET_UPDATE_OPTIONS") {
+        if (intent.getAction().equals(ButtonActionIntent) ||
+                intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED) ||
+                intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             long cardNum = sp.getLong(appWidgetId + "_cardid", -1);
             if (cardNum >= 0) {
                 new EdenredCommTask(context, appWidgetId, widgetWidth).execute(cardNum);
             }
         }
-        if (intent.getAction() == AppWidgetManager.ACTION_APPWIDGET_DELETED) {
-            sp.edit().remove(appWidgetId + "_cardid").commit();
-            sp.edit().remove(appWidgetId + "_value").commit();
-            sp.edit().remove(appWidgetId + "_notify").commit();
-            sp.edit().remove(appWidgetId + "_width").commit();
+        if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_DELETED)) {
+            sp.edit().remove(appWidgetId + "_cardid").apply();
+            sp.edit().remove(appWidgetId + "_value").apply();
+            sp.edit().remove(appWidgetId + "_notify").apply();
+            sp.edit().remove(appWidgetId + "_width").apply();
         }
     }
 
     private void updateWidgets(Context context, AppWidgetManager widgetManager, int appWidgetId) {
-        Log.d("EdenredWidget", "UpdateWidgets");
-        int widgetWidth = 0;
+        int widgetWidth;
         boolean isPortrait = context.getResources().getBoolean(R.bool.isPort);
 
         AppWidgetProviderInfo info = AppWidgetManager.getInstance(
@@ -69,9 +69,11 @@ public class MainActivity extends AppWidgetProvider {
                 Context.MODE_PRIVATE);
         sp.edit().putInt(appWidgetId + "_width", widgetWidth).commit();
 
-        Intent intent = new Intent("MY_PACKAGE_NAME.WIDGET_BUTTON");
+        RemoteViews updateViews = generateLayout(context, appWidgetId, widgetWidth);
+        Intent intent = new Intent(ButtonActionIntent);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         context.sendBroadcast(intent);
+        widgetManager.updateAppWidget(appWidgetId, updateViews);
     }
 
     @Override
@@ -94,7 +96,7 @@ public class MainActivity extends AppWidgetProvider {
     }
 
     public static RemoteViews generateLayout(Context context, int appWidgetId, int widgetWidth) {
-        Intent intent = new Intent("MY_PACKAGE_NAME.WIDGET_BUTTON");
+        Intent intent = new Intent(ButtonActionIntent);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         PendingIntent pending = PendingIntent.getBroadcast(
                 context, appWidgetId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
