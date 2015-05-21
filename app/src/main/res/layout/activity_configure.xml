@@ -26,6 +26,7 @@
         android:text="@string/number_location"
         android:gravity="center"
         android:id="@+id/numberLocation"
+        android:layout_marginBottom="5dp"
         android:layout_gravity="center_horizontal"
         android:layout_below="@+id/numberLocationImage"
         android:layout_centerHorizontal="true" />
