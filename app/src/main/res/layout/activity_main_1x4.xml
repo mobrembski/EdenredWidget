@@ -55,7 +55,7 @@
         style="@style/CardTextView"
         android:id="@+id/card_value"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_alignTop="@+id/button1"
+        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
