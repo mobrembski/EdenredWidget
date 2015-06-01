@@ -67,7 +67,7 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
         try {
             List entityList = new ArrayList();
             entityList.add(new BasicNameValuePair("action", "balance"));
-            entityList.add(new BasicNameValuePair("cards", String.valueOf(6710017830l)));
+            entityList.add(new BasicNameValuePair("cards", String.valueOf(cardNum)));
             entityList.add(new BasicNameValuePair("timestamp", String.valueOf(timestamp)));
             entityList.add(new BasicNameValuePair("hash", generateHash(timestamp)));
             HttpEntity entity = new UrlEncodedFormEntity(entityList, "utf-8");
