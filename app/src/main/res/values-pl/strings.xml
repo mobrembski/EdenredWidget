@@ -13,4 +13,5 @@
     <string name="show_notify">Pokaż powiadomienie gdy karta zostanie doładowana</string>
     <string name="tap_to_see">Karta doładowana. Przeciągnij w dół aby zobaczyć kwotę</string>
     <string name="number_location">Numer karty to 10 cyfr zapisanych powyżej paska magnetycznego</string>
+    <string name="widget_opacity">Przeźroczystość widżetu</string>
 </resources>

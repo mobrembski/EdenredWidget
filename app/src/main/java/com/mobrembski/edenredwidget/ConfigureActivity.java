@@ -1,5 +1,6 @@
 package com.mobrembski.edenredwidget;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
@@ -9,8 +10,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.Toast;
 
 
@@ -48,7 +51,7 @@ public class ConfigureActivity extends Activity {
         dialog.show();
     }
 
-    private class ConfigureDialog extends Dialog {
+    private class ConfigureDialog extends Dialog implements SeekBar.OnSeekBarChangeListener {
 
         public ConfigureDialog(Context context) {
             super(context);
@@ -60,10 +63,12 @@ public class ConfigureActivity extends Activity {
                     SharedPreferences sp = getSharedPreferences(getPackageName(), MODE_PRIVATE);
                     EditText et = (EditText) findViewById(R.id.edencard_number);
                     CheckBox notifyBox = (CheckBox) findViewById(R.id.notifyBox);
+                    SeekBar bar = (SeekBar)findViewById(R.id.opacity_seekbar);
                     try {
                         long enteredNumber = Long.parseLong(et.getText().toString());
                         sp.edit().putLong(mAppWidgetId + "_cardid", enteredNumber).commit();
                         sp.edit().putBoolean(mAppWidgetId + "_notify", notifyBox.isChecked()).commit();
+                        sp.edit().putInt(mAppWidgetId + "_opacity", bar.getProgress()).commit();
                     } catch (NumberFormatException ex) {
                         Toast.makeText(getApplicationContext(), R.string.card_input_invalid, Toast.LENGTH_LONG).show();
                         return;
@@ -74,12 +79,35 @@ public class ConfigureActivity extends Activity {
                     dismiss();
                 }
             });
+            SeekBar bar = (SeekBar)findViewById(R.id.opacity_seekbar);
+            bar.setOnSeekBarChangeListener(this);
             findViewById(R.id.exit_button).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     finish();
                 }
             });
+        }
+
+        @SuppressLint("NewApi")
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+            if (currentapiVersion >= 11) {
+                View v = getWindow().getDecorView();
+                float f = (float) progress / 100f;
+                v.setAlpha(f);
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+
         }
     }
 }

@@ -14,5 +14,6 @@
     <string name="show_notify">Show notifications when balance is increased</string>
     <string name="tap_to_see">Card balance increased. Drag down to see balance</string>
     <string name="number_location">Card number is a 10 digit number located above magnetic strip</string>
+    <string name="widget_opacity">Opacity of the widget</string>
 
 </resources>

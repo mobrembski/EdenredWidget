@@ -45,12 +45,12 @@ class EdenredCommTask extends AsyncTask<Long, Void, Void> {
     private final SharedPreferences sp;
     private final int width;
 
-    public EdenredCommTask(Context ctx, int appWidgetId, int widgetWidth) {
+    public EdenredCommTask(Context ctx, int appWidgetId, int widgetWidth, int alpha) {
         context = ctx;
         width = widgetWidth;
         widgetId = appWidgetId;
         manager = AppWidgetManager.getInstance(context);
-        view = MainActivity.generateLayout(ctx, appWidgetId, widgetWidth);
+        view = MainActivity.generateLayout(ctx, appWidgetId, widgetWidth, alpha);
         sp = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
     }
 

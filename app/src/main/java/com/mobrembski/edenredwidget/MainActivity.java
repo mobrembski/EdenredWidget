@@ -35,12 +35,13 @@ public class MainActivity extends AppWidgetProvider {
         SharedPreferences sp = context.getSharedPreferences(context.getPackageName(),
                 Context.MODE_PRIVATE);
         int widgetWidth = sp.getInt(appWidgetId + "_width", 80);
+        int alpha = sp.getInt(appWidgetId + "_opacity", 100);
         if (intent.getAction().equals(ButtonActionIntent) ||
                 intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_OPTIONS_CHANGED) ||
                 intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
             long cardNum = sp.getLong(appWidgetId + "_cardid", -1);
             if (cardNum >= 0) {
-                new EdenredCommTask(context, appWidgetId, widgetWidth).execute(cardNum);
+                new EdenredCommTask(context, appWidgetId, widgetWidth, (int)(alpha * 2.5f)).execute(cardNum);
             }
         }
         if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_DELETED)) {
@@ -48,6 +49,7 @@ public class MainActivity extends AppWidgetProvider {
             sp.edit().remove(appWidgetId + "_value").apply();
             sp.edit().remove(appWidgetId + "_notify").apply();
             sp.edit().remove(appWidgetId + "_width").apply();
+            sp.edit().remove(appWidgetId + "_opacity").apply();
         }
     }
 
@@ -68,8 +70,8 @@ public class MainActivity extends AppWidgetProvider {
         SharedPreferences sp = context.getSharedPreferences(context.getPackageName(),
                 Context.MODE_PRIVATE);
         sp.edit().putInt(appWidgetId + "_width", widgetWidth).commit();
-
-        RemoteViews updateViews = generateLayout(context, appWidgetId, widgetWidth);
+        int alpha = sp.getInt(appWidgetId + "_opacity", 100);
+        RemoteViews updateViews = generateLayout(context, appWidgetId, widgetWidth, (int)(alpha * 2.5f));
         Intent intent = new Intent(ButtonActionIntent);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         context.sendBroadcast(intent);
@@ -81,21 +83,22 @@ public class MainActivity extends AppWidgetProvider {
                                           AppWidgetManager appWidgetManager,
                                           int appWidgetId,
                                           Bundle newOptions) {
-
-        RemoteViews updateViews = generateLayout(context, appWidgetId, newOptions);
-        int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
         SharedPreferences sp = context.getSharedPreferences(
                 context.getPackageName(), Context.MODE_PRIVATE);
+        int alpha = sp.getInt(appWidgetId + "_opacity", 100);
+        RemoteViews updateViews = generateLayout(context, appWidgetId, newOptions, alpha);
+        int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+
         sp.edit().putInt(appWidgetId + "_width", minWidth).commit();
         appWidgetManager.updateAppWidget(appWidgetId, updateViews);
     }
 
-    public static RemoteViews generateLayout(Context context, int appWidgetId, Bundle newOptions) {
+    public static RemoteViews generateLayout(Context context, int appWidgetId, Bundle newOptions, int alpha) {
         int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
-        return generateLayout(context, appWidgetId, minWidth);
+        return generateLayout(context, appWidgetId, minWidth, alpha);
     }
 
-    public static RemoteViews generateLayout(Context context, int appWidgetId, int widgetWidth) {
+    public static RemoteViews generateLayout(Context context, int appWidgetId, int widgetWidth, int alpha) {
         Intent intent = new Intent(ButtonActionIntent);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
         PendingIntent pending = PendingIntent.getBroadcast(
@@ -104,22 +107,27 @@ public class MainActivity extends AppWidgetProvider {
         if (widgetWidth <= 110) {
             updateViews = new RemoteViews(context.getPackageName(), R.layout.activity_main_1x1);
             updateViews.setOnClickPendingIntent(R.id.layout_1x1, pending);
+            updateViews.setInt(R.id.bgcolor, "setAlpha", alpha);
         }
         if (widgetWidth > 110 && widgetWidth <= 180) {
             updateViews = new RemoteViews(context.getPackageName(), R.layout.activity_main_1x2);
             updateViews.setOnClickPendingIntent(R.id.button1, pending);
+            updateViews.setInt(R.id.bgcolor, "setAlpha", alpha);
         }
         if (widgetWidth > 180 && widgetWidth <= 250) {
             updateViews = new RemoteViews(context.getPackageName(), R.layout.activity_main_1x3);
             updateViews.setOnClickPendingIntent(R.id.button1, pending);
+            updateViews.setInt(R.id.bgcolor, "setAlpha", alpha);
         }
         if (widgetWidth > 250 && widgetWidth <= 320) {
             updateViews = new RemoteViews(context.getPackageName(), R.layout.activity_main_1x4);
             updateViews.setOnClickPendingIntent(R.id.button1, pending);
+            updateViews.setInt(R.id.bgcolor, "setAlpha", alpha);
         }
         if (widgetWidth > 320) {
             updateViews = new RemoteViews(context.getPackageName(), R.layout.activity_main_1x4);
             updateViews.setOnClickPendingIntent(R.id.button1, pending);
+            updateViews.setInt(R.id.bgcolor, "setAlpha", alpha);
         }
         return updateViews;
     }
